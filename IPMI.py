@@ -2,12 +2,6 @@ from LabNode import LabNode
 import subprocess
 import subprocess as sp
 
-def establishConnection():
-    status, result = sp.getstatusoutput("ipmitool -H server-ipmi -U root -p local*99 chassis identify 1")
-    print(status)
-    print(result)
-
-
 def ipmiPowerOn(node):
     print('Powering on %s with ipmi', node.name)
 
@@ -17,7 +11,11 @@ def ipmiPowerOff(node):
 def ipmiPowerCycle(node):
     print('Power cycling %s with ipmi', node.name)
 
-def ipmiBlinkLED(node):
-    print('Sending LED blink to ipmi', node.name) 
+def ipmiBlinkLED(node, password):
+    print('Sending LED blink to ipmi', node.name)
+    password = input("enter password for machine %s: " %(node.name))
+    status, result = sp.getstatusoutput("ipmitool -I lanplus -H {} -U root -p password {} -C 17 chassis identify".format(ip, password))
+    print(status)
+    print(result)
 
-establishConnection()
+
