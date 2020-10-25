@@ -30,7 +30,7 @@ class Lab:
         # Initialize rack list
         for i in range(0, (int(height)*int(width))):
             print(i)
-            self.racks.append(Rack(10))
+            self.racks.append(Rack(i, 10))
             
     def addNode(self, labNode):
         self.nodeList.append(labNode)
@@ -43,12 +43,19 @@ class Lab:
         return self.nodeList
 
     def getRack(self, y, x):
-        print(y - 1, x - 1)
         return self.racks[((y-1) * int(self.width)) + (x-1)]
+
+    def getRackByNum(self, num):
+        for rack in self.racks:
+            if rack.num == num:
+                return rack
+        return None
+        
 
 
 class Rack:
-    def __init__(self, units):
+    def __init__(self, rackNum, units):
+        self.num = rackNum
         self.units = units
         self.nodeList = []
 
