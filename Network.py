@@ -1,6 +1,7 @@
 import os
 import socket
 import subprocess
+import subprocess as sp
 import concurrent.futures
 from getmac import get_mac_address
 from LabNode import LabNode
