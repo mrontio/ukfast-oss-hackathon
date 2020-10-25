@@ -3,7 +3,7 @@ import os
 from LabNode import LabNode
 from LabNode import Lab
 from Network import networkScan
-
+import IPMI
 
 def printLabs(labList):
         i = 1
@@ -84,19 +84,19 @@ def createRackView(num, lab):
                         rack.getNode(machid).setIPMIAddr(ipmi_addr)
                 elif (option == 'p'):
                         machid = int(input('Which machine? '))
-                        ipmiPowerOn(rack.getNode(machid))
+                        IPMI.ipmiPowerOn(rack.getNode(machid))
                         print('IPMI Signal sent')
                 elif (option == 'p'):
                         machid = int(input('Which machine? '))
-                        ipmiPowerOff(rack.getNode(machid))
+                        IPMI.ipmiPowerOff(rack.getNode(machid))
                         print('IPMI Signal sent')
                 elif (option == 'r'):
                         machid = int(input('Which machine? '))
-                        ipmiPowerCycle(rack.getNode(machid))
+                        IPMI.ipmiPowerCycle(rack.getNode(machid))
                         print('IPMI Signal sent')
                 elif (option == 'b'):
                         machid = int(input('Which machine? '))
-                        ipmiBlink(rack.getNode(machid))
+                        IPMI.ipmiBlink(rack.getNode(machid))
                         print('IPMI Signal sent')
                 
                 elif (option == 'q'):
@@ -132,7 +132,7 @@ def dummyNetworkScan():
 
 
 def scanDialogue():
-        return dummyNetworkScan()
+        return networkScan()
 
 
 def chooseLab(labList):

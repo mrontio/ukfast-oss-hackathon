@@ -11,7 +11,7 @@ def ipmiPowerOff(node):
 def ipmiPowerCycle(node):
     print('Power cycling %s with ipmi', node.name)
 
-def ipmiBlinkLED(node, password):
+def ipmiBlink(node):
     print('Sending LED blink to ipmi', node.name)
     password = input("enter password for machine %s: " %(node.name))
     status, result = sp.getstatusoutput("ipmitool -I lanplus -H {} -U root -p password {} -C 17 chassis identify".format(ip, password))
