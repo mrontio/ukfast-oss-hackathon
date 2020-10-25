@@ -92,7 +92,7 @@ def createRackView(num, lab):
                         print('IPMI Signal sent')
                 elif (option == 'r'):
                         machid = int(input('Which machine? '))
-                        ipmiReboot(rack.getNode(machid))
+                        ipmiPowerCycle(rack.getNode(machid))
                         print('IPMI Signal sent')
                 elif (option == 'b'):
                         machid = int(input('Which machine? '))
@@ -132,7 +132,8 @@ def dummyNetworkScan():
 
 
 def scanDialogue():
-        return networkScan()
+        return dummyNetworkScan()
+
 
 def chooseLab(labList):
         if labList == [] :

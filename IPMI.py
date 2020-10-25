@@ -8,4 +8,16 @@ def establishConnection():
     print(result)
 
 
+def ipmiPowerOn(node):
+    print('Powering on %s with ipmi', node.name)
+
+def ipmiPowerOff(node):
+    print('Powering off %s with ipmi', node.name)
+
+def ipmiPowerCycle(node):
+    print('Power cycling %s with ipmi', node.name)
+
+def ipmiBlinkLED(node):
+    print('Sending LED blink to ipmi', node.name) 
+
 establishConnection()
