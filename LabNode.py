@@ -3,8 +3,10 @@ class LabNode:
         self.name = name
         self.mac_addr = mac_addr
         self.ip_addr = ip_addr
+        self.ipmi_addr = ''
         self.labPosX = None
         self.labPosY = None
+        self.desc = ''
 
     def ipmiStatus(self):
         print('polling ipmi from machine', self.name)
@@ -17,6 +19,10 @@ class LabNode:
     def setLabPosition(self, y, x):
         self.labPosX = x
         self.labPosY = y
+
+    def setIPMIAddr(self, addr):
+        self.ipmi_addr = addr
+    
 
 
 class Lab:
