@@ -108,7 +108,7 @@ def networkScan():
     if osys == "win":
         with concurrent.futures.ThreadPoolExecutor(max_workers=300) as executor:
             executor.map(discoverwin, network_list)
-    elif osys == "linux:":
+    elif osys == "linux":
         with concurrent.futures.ThreadPoolExecutor(max_workers=300) as executor:
             executor.map(discoverlinux, network_list)
 
