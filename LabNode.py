@@ -14,9 +14,10 @@ class LabNode:
     def setDesc(self, desc):
         self.desc = desc
 
-    def setLabPosition(self, x, y):
+    def setLabPosition(self, y, x):
         self.labPosX = x
         self.labPosY = y
+
 
 class Lab:
     def __init__(self, name, height, width):
@@ -24,22 +25,27 @@ class Lab:
         self.nodeList = []
         self.height = height
         self.width = width
-
-        # Initialize rack list
-        for i in range(1, height*width):
-            self.racks[i] = Rack()
-            
+        self.racks = []
         
-
+        # Initialize rack list
+        for i in range(0, (int(height)*int(width))):
+            print(i)
+            self.racks.append(Rack(10))
+            
     def addNode(self, labNode):
         self.nodeList.append(labNode)
-        self.racks[(labNode.labPosY * self.width) + labNode.labPosX].addNode(labNode)
+        self.racks[((int(labNode.labPosY) - 1) * (int(self.width))) + (int(labNode.labPosX) - 1)].addNode(labNode)
 
     def getNode(self, i):
         return self.nodeList[i]
 
     def getNodes(self):
         return self.nodeList
+
+    def getRack(self, y, x):
+        print(y - 1, x - 1)
+        return self.racks[((y-1) * int(self.width)) + (x-1)]
+
 
 class Rack:
     def __init__(self, units):
@@ -48,4 +54,10 @@ class Rack:
 
     def addNode(self, node):
         self.nodeList.append(node)
+
+    def getNode(self, i):
+        if (i < len(self.nodeList)) and (len(self.nodeList) != 0) :
+            return self.nodeList[i];
+        else :
+            return None
     

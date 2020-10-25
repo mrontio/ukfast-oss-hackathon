@@ -1,4 +1,5 @@
 import sys
+import os
 from LabNode import LabNode
 from LabNode import Lab
 
@@ -6,19 +7,50 @@ from LabNode import Lab
 def printLabs(labList):
         i = 1
         for lab in labList:
-                print("%d: %s (%s)" % (i, lab.name))
+                print("%d: %sxo" % (i, lab.name))
 
-def printLab(lab):
-        for y in range(1, lab.height):
-                for x in range(1, lab.width):
+def printLabTopdown(lab):
+        rackRow = []
+        string = ''
+        for y in range(1, int(lab.height) + 1):
+                rack_iterator = 0
+                for x in range(0, int(lab.width)):
+                         string += ('***************')
+                         string += ('     ')
+                string += '\n'
+
+                rackList = []
+                for i in range(1, int(lab.width) + 1):
+                        print(i)
+                        rackList.append(lab.getRack(y, i))
+
+                for i in range(0,4):
+                        for rack in rackList:
+                                node = rack.getNode(i)
+                                if node != None:
+                                        string += '* {0:11} *'.format(node.name)
+                                else:
+                                        string += '*             *'
+                                string += '     '
+                        string += '\n'
+                        
+
+                for x in range(0, int(lab.width)):
+                        string += '***************'
+                        string += '     '
+                string = string + '\n'                        
+                        
+                
+        print(string)
+                
                         
                 
 
 def createLabView(labList):
         printLabs(labList)
-        labNum = input('Which lab would you like to view? ')
+        labNum = int(input('Which lab would you like to view? '))
         lab = labList[labNum - 1]
-        printLab(lab)
+        printLabTopdown(lab)
         
 
                         
@@ -89,7 +121,7 @@ def configureScan(netlist, labList):
                 finished = False
                 while finished == False:
                         node = createNode(netlist)
-                        lab.addNode(netlist)
+                        lab.addNode(node)
                         print('added %s to %s lab' % (node.name, lab.name))
                         again = input('Add another? [y/N]')
                         if again != 'y':
