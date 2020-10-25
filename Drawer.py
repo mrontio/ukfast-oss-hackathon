@@ -53,6 +53,7 @@ def printHelpRack():
         print('v    view rack details')
         print('h    view help')
         print('p    send poweron ipmi to machine')
+        print('o    send poweroff ipmi to machine')
         print('r    send reboot ipmi to machine')
         print('b    blink ID LED of machine')
         print('q    quit rack view')
@@ -62,10 +63,12 @@ def printMachineDetails(node):
         
 def createRackView(num, lab):
         rack = lab.getRackByNum(num)
-        print('*----------------------------------------*')
+        print('*--------------------------------------------*')
+        i = 0
         for node in rack.nodeList:
-                print('* %10s: %10s, %10s  *' % (node.name, node.ip_addr, node.mac_addr))
-        print('*----------------------------------------*')
+                print('%2d: * %10s: %10s, %10s  *' % (i, node.name, node.ip_addr, node.mac_addr))
+                i += 1
+        print('*--------------------------------------------*')
         finished = False
         while not finished :
                 option = input('> ')
@@ -74,6 +77,23 @@ def createRackView(num, lab):
                 elif (option == 'v'):
                         machid = int(input('Which machine?'))
                         printMachineDetails(rack.getNode(machid))
+                elif (option == 'p'):
+                        machid = int(input('Which machine?'))
+                        ipmiPowerOn(rack.getNode(machid))
+                        print('IPMI Signal sent')
+                elif (option == 'p'):
+                        machid = int(input('Which machine?'))
+                        ipmiPowerOff(rack.getNode(machid))
+                        print('IPMI Signal sent')
+                elif (option == 'r'):
+                        machid = int(input('Which machine?'))
+                        ipmiReboot(rack.getNode(machid))
+                        print('IPMI Signal sent')
+                elif (option == 'b'):
+                        machid = int(input('Which machine?'))
+                        ipmiBlink(rack.getNode(machid))
+                        print('IPMI Signal sent')
+                
                 elif (option == 'q'):
                         finished = True
                         
@@ -152,10 +172,6 @@ def createNode(netlist):
         return node
 
 def configureScan(netlist, labList):
-        print('Found computers:')
-        for i in range(0, len(netlist)) :
-                print('ID', i, ':', netlist[i].ip_addr, '=', netlist[i].mac_addr, '(', netlist[i].name, ')')
-
         doConf = input('Configure? [y/N]:')
         if doConf == 'y' :
                 lab = chooseLab(labList)
