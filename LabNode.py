@@ -25,12 +25,8 @@ class Lab:
         self.height = height
         self.width = width
 
-    def addNode(self, name, mac_addr, ip_addr):
-        self.nodeList.append(LabNode(name, mac_addr, ip_addr))
+    def addNode(self, labNode):
+        self.nodeList.append(labNode)
 
     def getNode(self, i):
         return nodeList[i]
-    
-    
-    
-        
