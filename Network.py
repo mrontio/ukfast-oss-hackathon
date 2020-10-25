@@ -71,8 +71,19 @@ def discoverlinux(ip):
         print("System " + ip + " is UP !")
         ip_dict[ip] = "Online"
         ip_list.append(ip)
+        ip_mac = get_mac_address(ip=ip)
+        mac_list.append(ip_mac)
+        try:
+            test_ip = socket.gethostbyaddr(ip)
+            print(ip, "Online", ip_mac, test_ip[0])
+            network_scan.append(LabNode(test_ip[0], ip_mac, ip))
+        except:
+            print(ip, "Online", ip_mac)
+            network_scan.append(LabNode("none", ip_mac, ip))
+            pass
     else:
         print("System " + ip + " is DOWN !")
+
 
 
 def networkScan():
