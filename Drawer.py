@@ -52,6 +52,7 @@ def printHelpLab():
 def printHelpRack():
         print('v    view rack details')
         print('h    view help')
+        print('i    set ipmi address')
         print('p    send poweron ipmi to machine')
         print('o    send poweroff ipmi to machine')
         print('r    send reboot ipmi to machine')
@@ -75,22 +76,26 @@ def createRackView(num, lab):
                 if (option == '') or (option == 'h'):
                         printHelpRack()
                 elif (option == 'v'):
-                        machid = int(input('Which machine?'))
+                        machid = int(input('Which machine? '))
                         printMachineDetails(rack.getNode(machid))
+                elif (option == 'i'):
+                        machid = int(input('Which machine? '))
+                        ipmi_addr = input('Please provide the IPMI address: ')
+                        rack.getNode(machid).setIPMIAddr(ipmi_addr)
                 elif (option == 'p'):
-                        machid = int(input('Which machine?'))
+                        machid = int(input('Which machine? '))
                         ipmiPowerOn(rack.getNode(machid))
                         print('IPMI Signal sent')
                 elif (option == 'p'):
-                        machid = int(input('Which machine?'))
+                        machid = int(input('Which machine? '))
                         ipmiPowerOff(rack.getNode(machid))
                         print('IPMI Signal sent')
                 elif (option == 'r'):
-                        machid = int(input('Which machine?'))
+                        machid = int(input('Which machine? '))
                         ipmiReboot(rack.getNode(machid))
                         print('IPMI Signal sent')
                 elif (option == 'b'):
-                        machid = int(input('Which machine?'))
+                        machid = int(input('Which machine? '))
                         ipmiBlink(rack.getNode(machid))
                         print('IPMI Signal sent')
                 
@@ -110,14 +115,14 @@ def createLabView(labList):
                 if (option == ''):
                         printHelpLab()
                 elif (option == 'v'):
-                        rackNum = int(input("Which rack?"))
+                        rackNum = int(input("Which rack? "))
                         createRackView(rackNum, lab)
                         printLabTopdown(lab)
                 elif (option == 'q'):
                         finished = True
 
                         
-def dummyNetworkScan(begin, end, submask):
+def dummyNetworkScan():
         networkscan = []
         networkscan.append(LabNode('cerberos', '1::0', '172.28.108.22'))
         networkscan.append(LabNode('iris', '2::0', '172.28.108.32'))
@@ -172,17 +177,15 @@ def createNode(netlist):
         return node
 
 def configureScan(netlist, labList):
-        doConf = input('Configure? [y/N]:')
-        if doConf == 'y' :
-                lab = chooseLab(labList)
-                finished = False
-                while finished == False:
-                        node = createNode(netlist)
-                        lab.addNode(node)
-                        print('added %s to %s lab' % (node.name, lab.name))
-                        again = input('Add another? [y/N]')
-                        if again != 'y':
-                                finished = True
+        lab = chooseLab(labList)
+        finished = False
+        while finished == False:
+                node = createNode(netlist)
+                lab.addNode(node)
+                print('added %s to %s lab' % (node.name, lab.name))
+                again = input('Add another? [y/N]')
+                if again != 'y':
+                        finished = True
 
 
 
