@@ -4,6 +4,10 @@ Weclome judges (and others) to our ukfast hackathon submission
 ## What it does
 Lab Explorer is a way to map, ping, bring up and identify machines in your lab, with a top-down lab view and per-rack view, all in the comfort of your terminal.
 
+## Demonstration
+- Please play '2020-10-25 16-55-15.mkv' for demonstration of functionality
+- Please play 'WIN_2010-25_16_28_3_pro.mp4' for demonstation IPMI locator functionality
+
 ## How to run it
 Suggested OS: GNU/Linux
 - Install python3 and pip from your favorite package manager
