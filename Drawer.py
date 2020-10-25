@@ -51,17 +51,36 @@ def printLabTopdown(lab):
 def printHelpLab():
         print('v    view rack')
         print('h    view help')
-        print('l    change lab')
-        print('n    create new lab')
         print('q    quit')
 
+def printHelpRack():
+        print('v    view rack details')
+        print('h    view help')
+        print('p    send poweron ipmi to machine')
+        print('r    send reboot ipmi to machine')
+        print('b    blink ID LED of machine')
+        print('q    quit rack view')
+
+def printMachineDetails(node):
+        print('Name: %s\nIP: %s\nMAC: %s\nIPMI IP: %s\nDescription: %s\n' % (node.name, node.ip_addr, node.ip_addr, node.ipmi_addr, node.desc))
+        
 def createRackView(num, lab):
         rack = lab.getRackByNum(num)
         print('*----------------------------------------*')
         for node in rack.nodeList:
                 print('* %10s: %10s, %10s  *' % (node.name, node.ip_addr, node.mac_addr))
         print('*----------------------------------------*')
-        
+        finished = False
+        while not finished :
+                option = input('> ')
+                if (option == '') or (option == 'h'):
+                        printHelpRack()
+                elif (option == 'v'):
+                        machid = int(input('Which machine?'))
+                        printMachineDetails(rack.getNode(machid))
+                elif (option == 'q'):
+                        finished = True
+                        
         
 def createLabView(labList):
         printLabs(labList)
@@ -76,6 +95,7 @@ def createLabView(labList):
                 elif (option == 'v'):
                         rackNum = int(input("Which rack?"))
                         createRackView(rackNum, lab)
+                        printLabTopdown(lab)
                 elif (option == 'q'):
                         finished = True
 
