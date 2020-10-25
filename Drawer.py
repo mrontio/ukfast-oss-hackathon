@@ -16,7 +16,7 @@ def printLabTopdown(lab):
         for y in range(1, int(lab.height) + 1):
                 rack_iterator = 0
                 for x in range(0, int(lab.width)):
-                         string += ('***************')
+                         string += ('    ***************')
                          string += ('     ')
                 string += '\n'
 
@@ -29,15 +29,15 @@ def printLabTopdown(lab):
                         for rack in rackList:
                                 node = rack.getNode(i)
                                 if node != None:
-                                        string += '* {0:11} *'.format(node.name)
+                                        string += '{1:2}: * {0:11} *'.format(node.name, rack.num)
                                 else:
-                                        string += '*             *'
+                                        string += '{0:2}: *             *'.format(rack.num)
                                 string += '     '
                         string += '\n'
 
 
                 for x in range(0, int(lab.width)):
-                        string += '***************'
+                        string += '    ***************'
                         string += '     '
                 string = string + '\n'
 
