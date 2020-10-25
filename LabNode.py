@@ -35,7 +35,6 @@ class Lab:
         
         # Initialize rack list
         for i in range(0, (int(height)*int(width))):
-            print(i)
             self.racks.append(Rack(i, 10))
             
     def addNode(self, labNode):
