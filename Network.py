@@ -14,29 +14,37 @@ network_scan = []
 host_ip = []
 network_count = 0
 
-if os.name == "nt":
-    os = "win"
-else:
-    os = "linux"
 
-for i in range(0, 3):
-    split_ip = socket.gethostbyname(socket.gethostname()).split('.')[i]
-    host_ip.append(split_ip)
+def os_type():
+    global osys
+    if os.name == "nt":
+        osys = "win"
+    else:
+        osys = "linux"
 
-host_ip = ".".join(host_ip)
-host_ip = host_ip + "."
 
-hostname = socket.gethostname()
-ip = socket.gethostbyname(hostname)
 
-# print(host_ip, ip)
-for i in range(0, 254):
-    network_list.append(host_ip + str(i))
+def ip_setup():
+    for i in range(0, 3):
+        split_ip = socket.gethostbyname(socket.gethostname()).split('.')[i]
+        host_ip.append(split_ip)
 
-print("Discovering devices...")
+    host_ip = ".".join(host_ip)
+    host_ip = host_ip + "."
+
+    hostname = socket.gethostname()
+    ip = socket.gethostbyname(hostname)
+
+    # print(host_ip, ip)
+    for i in range(0, 254):
+        network_list.append(host_ip + str(i))
+
+
+# print("Discovering devices...")
 
 
 def discoverwin(ip):
+    global network_scan
     output = subprocess.Popen(["ping.exe", ip], stdout=subprocess.PIPE).communicate()[0]
     if b'unreachable' in output:
         pass
@@ -67,18 +75,40 @@ def discoverlinux(ip):
         print("System " + ip + " is DOWN !")
 
 
-if os == "win":
-    with concurrent.futures.ThreadPoolExecutor(max_workers=300) as executor:
-        executor.map(discoverwin, network_list)
-elif os == "linux:":
-    with concurrent.futures.ThreadPoolExecutor(max_workers=300) as executor:
-        executor.map(discoverlinux, network_list)
+def networkScan():
+    global host_ip
+    os_type()
 
-print(len(mac_list), mac_list)
+    for i in range(0, 3):
+        split_ip = socket.gethostbyname(socket.gethostname()).split('.')[i]
+        host_ip.append(split_ip)
 
-# for each ip:
-print("Number of discoverable devices: ", len(ip_list))
-for key in (ip_dict):
-    print(key, '->', ip_dict[key])
+    host_ip = ".".join(host_ip)
+    host_ip = host_ip + "."
 
-exit()
+    hostname = socket.gethostname()
+    ip = socket.gethostbyname(hostname)
+
+    # print(host_ip, ip)
+    for i in range(0, 254):
+        network_list.append(host_ip + str(i))
+
+    if osys == "win":
+        with concurrent.futures.ThreadPoolExecutor(max_workers=300) as executor:
+            executor.map(discoverwin, network_list)
+    elif osys == "linux:":
+        with concurrent.futures.ThreadPoolExecutor(max_workers=300) as executor:
+            executor.map(discoverlinux, network_list)
+
+    print(len(mac_list), mac_list)
+
+    # for each ip:
+    print("Number of discoverable devices: ", len(ip_list))
+    for key in (ip_dict):
+        print(key, '->', ip_dict[key])
+
+    return network_scan
+
+
+
+
