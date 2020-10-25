@@ -2,15 +2,14 @@
 
 from LabNode import LabNode
 import Creator
+import Drawer
 
 def main():
         labList = Creator.loadLabs()
 
-        # pass labList  to creator functions
+        Drawer.begin(labList)
 
-        # draw with pretty ui
-
-        Creator.storeLabs(labList)
+        # Creator.storeLabs(labList)
                 
         exit()
 
