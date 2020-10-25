@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 from LabNode import LabNode
+from LabNode import Lab
 import Creator
 import Drawer
 
@@ -9,7 +10,7 @@ def main():
 
         Drawer.begin(labList)
 
-        # Creator.storeLabs(labList)
+        Creator.storeLabs(labList)
                 
         exit()
 

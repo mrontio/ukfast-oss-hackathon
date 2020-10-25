@@ -25,8 +25,27 @@ class Lab:
         self.height = height
         self.width = width
 
+        # Initialize rack list
+        for i in range(1, height*width):
+            self.racks[i] = Rack()
+            
+        
+
     def addNode(self, labNode):
         self.nodeList.append(labNode)
+        self.racks[(labNode.labPosY * self.width) + labNode.labPosX].addNode(labNode)
 
     def getNode(self, i):
-        return nodeList[i]
+        return self.nodeList[i]
+
+    def getNodes(self):
+        return self.nodeList
+
+class Rack:
+    def __init__(self, units):
+        self.units = units
+        self.nodeList = []
+
+    def addNode(self, node):
+        self.nodeList.append(node)
+    

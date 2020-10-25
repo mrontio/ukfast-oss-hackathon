@@ -2,8 +2,24 @@ import sys
 from LabNode import LabNode
 from LabNode import Lab
 
+
+def printLabs(labList):
+        i = 1
+        for lab in labList:
+                print("%d: %s (%s)" % (i, lab.name))
+
+def printLab(lab):
+        for y in range(1, lab.height):
+                for x in range(1, lab.width):
+                        
+                
+
 def createLabView(labList):
-        print('doing nothing')
+        printLabs(labList)
+        labNum = input('Which lab would you like to view? ')
+        lab = labList[labNum - 1]
+        printLab(lab)
+        
 
                         
 def dummyNetworkScan(begin, end, submask):
@@ -52,7 +68,7 @@ def createNode(netlist):
         y = input('Which rack? ')
         node.setLabPosition(x, y)
 
-        name = input('Set name? (blank for current/none) ')
+        name = input('Set name? (blank for current) ')
         if name != '':
                 node.name = name
                 
@@ -78,6 +94,7 @@ def configureScan(netlist, labList):
                         again = input('Add another? [y/N]')
                         if again != 'y':
                                 finished = True
+        
                         
                 
                 
@@ -85,13 +102,14 @@ def configureScan(netlist, labList):
 
 def begin(labList):
         print(f'Welcome to lab explorer!')
-        if labList != [] :
-                createLabView(labList)
-        else :
+        if labList == [] :
                 doScan = input('No configuration file found, scan network? [y/N]: ')
                 if doScan == 'y' :
                         netlist = scanDialogue()
                         configureScan(netlist, labList)
+
+        createLabView(labList)
+
 
 
         return labList
